@@ -1,0 +1,15 @@
+node {
+    stage('clone') {
+   git 'https://github.com/sountbouba/jenkins.git'
+}
+    stage('BUILD') {
+    sh '''
+    javac Main.java
+    java Main
+    '''
+}
+stage('RUN') {
+   sh label: 'script', script: 'java Main'
+}
+
+}
