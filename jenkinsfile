@@ -6,7 +6,7 @@ node{
     }
 
     stage('Build image') {
-        app = docker.build("xavki/nginx")
+        app = docker.build("bouba/nginx")
     }
 
     stage('Test image') {
