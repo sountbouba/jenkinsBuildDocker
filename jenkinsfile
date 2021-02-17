@@ -1,15 +1,18 @@
-node {
-    stage('clone') {
-   git 'https://github.com/sountbouba/jenkins.git'
-}
-    stage('BUILD') {
-    sh '''
-    javac Main.java
-    java Main
-    '''
-}
-stage('RUN') {
-   sh label: 'script', script: 'java Main'
-}
+node{
+  def app
 
+    stage('Clone') {
+        checkout scm
+    }
+
+    stage('Build image') {
+        app = docker.build("xavki/nginx")
+    }
+
+    stage('Test image') {
+        docker.image('bouba/nginx').withRun('-p 80:80') { c ->
+        sh 'docker ps'
+        sh 'curl localhost'
+	     }
+    }
 }
